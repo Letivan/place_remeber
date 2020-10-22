@@ -16,3 +16,19 @@ class LoginView(TemplateView):
             return redirect('home')
         return super(self.__class__, self).dispatch(request, *args, **kwargs)
 
+
+
+class HomeView(TemplateView):
+    """Home page View"""
+    template_name = 'home.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        """If the user is not logged in - redirect to the registration/authorization page"""
+        if not request.user.is_authenticated:
+            return redirect('login')
+        return super(self.__class__, self).dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(HomeView, self).get_context_data(**kwargs)
+        context['remembers'] = Remember.objects.filter(user=self.request.user)  # Adding memories to the context
+        return context

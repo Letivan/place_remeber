@@ -10,6 +10,6 @@ urlpatterns = [
     path("login/", LoginView.as_view(), name="login"),
     path("logout/", auth_views.LogoutView.as_view(), name="logout"),
     path('social-auth/', include('social_django.urls', namespace="social")),
-    path("addremember/", login_required(AddRememberView.as_view()), name="addremember"),
+    path("addremember/", AddRememberView.as_view(), name="addremember"),
     path("", HomeView.as_view(), name="home"),
 ]

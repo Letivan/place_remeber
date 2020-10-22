@@ -39,6 +39,12 @@ class AddRememberView(CreateView):
     form_class = RememberForm
     success_url = '/'
 
+    def dispatch(self, request, *args, **kwargs):
+        """If the user is not logged in - redirect to the registration/authorization page"""
+        if not request.user.is_authenticated:
+            return redirect('login')
+        return super(self.__class__, self).dispatch(request, *args, **kwargs)
+
     def form_valid(self, form):
         form.instance.user = self.request.user  # Sending a user to a form
         return super().form_valid(form)

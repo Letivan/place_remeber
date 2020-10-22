@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %} Places Remember {% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-12 my-2 text-center">
+            <p>Данный сервис позволяет хранить свои воспоминания</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 my-2">
+            <div class="card">
+                <div class="card-body text-center p-5">
+                    <a href="{% url 'social:begin' 'facebook' %}" class="btn btn-primary mb-2 btn-lg">Login with Facebook</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+{% endblock %}

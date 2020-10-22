@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% block title %} User Page {% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    {% for ass in backends.associated %}
+                        {% if ass.provider == 'facebook' %}
+                            <div class="row">
+                                <div class="col-md-6 text-center">
+                                    <img src="{{ass.extra_data.picture.data.url}}" alt="" width="150" height="150" style="border-radius: 50%">
+                                </div>
+                                <div class="col-md-6 social-container my-2">
+                                    <h4 class="mb-4">{{ ass.extra_data.name }}</h4>
+                                    <a href="{% url 'logout' %}"class="btn btn-danger">Logout</a>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row my-4">
+        <div class="col-12 text-center">
+            <a href="{% url 'addremember' %}" class="btn btn-success btn-lg">Добавить воспоминание</a>
+        </div>
+    </div>
+    <div id="basicMap"></div>
+    <div class="row">
+        <div class="col-12">
+            <h4 class="mb-4">Мои воспоминания</h4>
+            {% if remembers %}
+                {% for item in remembers %}
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <small class="badge badge-primary mb-3">{{ item.date_create|date:'d-m-Y' }}</small><br>
+                            <p class="text-justify">{{ item.remember }}</p>
+                            <hr>
+                            <div id="map_user{{ item.id }}" style="width: 100%; height: 300px"></div>
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function(){
+                                    map = new OpenLayers.Map('map_user{{ item.id }}');
+                                    var mapnik         = new OpenLayers.Layer.OSM();
+                                    var fromProjection = new OpenLayers.Projection("EPSG:4326");
+                                    var toProjection   = new OpenLayers.Projection("EPSG:900913");
+                                    var position       = new OpenLayers.LonLat({{ item.coordinate.longitude }}, {{ item.coordinate.latitude }}).transform( fromProjection, toProjection);
+                                    var zoom           = 15;
+
+                                    map.addLayer(mapnik);
+                                    var marker = new OpenLayers.Layer.Markers("");
+                                    var position_marker       = new OpenLayers.LonLat({{ item.coordinate.longitude }}, {{ item.coordinate.latitude }}).transform(
+                                        fromProjection, toProjection);
+                                    marker.addMarker(new OpenLayers.Marker(position_marker));
+                                    map.addLayer(marker);
+                                    map.setCenter(position, zoom, );
+                                })
+                            </script>
+                        </div>
+                    </div>
+
+                {% endfor %}
+            {% else %}
+                <div class="card">
+                    <div class="card-body">
+                        У Вас нет ни одного воспоминания
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}}

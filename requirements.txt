@@ -5,6 +5,12 @@ chardet==3.0.4
 cryptography==3.1.1
 defusedxml==0.7.0rc1
 Django==3.1.2
+django-appconf==1.0.4
+django-classy-tags==2.0.0
+django-crispy-forms==1.9.2
+django-geoposition-2==0.3.11
+geographiclib==1.50
+geopy==2.0.0
 idna==2.10
 oauthlib==3.1.0
 pycparser==2.20

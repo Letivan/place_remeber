@@ -17,7 +17,6 @@ class LoginView(TemplateView):
         return super(self.__class__, self).dispatch(request, *args, **kwargs)
 
 
-
 class HomeView(TemplateView):
     """Home page View"""
     template_name = 'home.html'
@@ -32,3 +31,18 @@ class HomeView(TemplateView):
         context = super(HomeView, self).get_context_data(**kwargs)
         context['remembers'] = Remember.objects.filter(user=self.request.user)  # Adding memories to the context
         return context
+
+
+class AddRememberView(CreateView):
+    """View adding a new memory"""
+    template_name = 'add_remeber_form.html'
+    form_class = RememberForm
+    success_url = '/'
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user  # Sending a user to a form
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        """If the form is invalid, render the invalid form."""
+        return self.render_to_response(self.get_context_data(form=form))

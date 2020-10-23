@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'social_django',
     'place_remeber',
-    'crispy_forms',
     'geoposition',
     # Apps
     'core.apps.CoreConfig',

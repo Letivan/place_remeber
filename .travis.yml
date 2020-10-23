@@ -10,7 +10,7 @@ install:
   - pip install coveralls
 # To run tests
 script:
-  - coverage run --source=place_remeber manage.py test
+  - coverage run --source=core manage.py test
 # send coverage report to coveralls
 after_success:
   coveralls

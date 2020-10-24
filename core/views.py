@@ -48,7 +48,3 @@ class AddRememberView(CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user  # Sending a user to a form
         return super().form_valid(form)
-
-    def form_invalid(self, form):
-        """If the form is invalid, render the invalid form."""
-        return self.render_to_response(self.get_context_data(form=form))

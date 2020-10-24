@@ -11,7 +11,7 @@ class Remember(models.Model):
     coordinate = GeopositionField(verbose_name='Координаты')
 
     def __str__(self):
-        return self.user.first_name
+        return str(self.id)
 
     class Meta:
         verbose_name = 'Воспоминание'
